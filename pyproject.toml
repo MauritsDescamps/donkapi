@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "donkapi"
+version = "0.1.0"
+description = "A minimal command line interface to the Donkey Republic API"
+authors = [
+    { name="Maurits Descamps", email="maurits.descamps@gmail.com" }
+]
+license = { text = "MIT" }
+dependencies = [
+    'requests',
+    'geopy'
+]
+
+[project.scripts]
+donkapi = "donkapi.main:main"
