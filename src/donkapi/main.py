@@ -52,6 +52,9 @@ def main():
     point = location.point
     top_right, bottom_left = get_box(point, args.box_size)
     hub_info = get_hub_info(top_right, bottom_left)
+    if len(hub_info) == 0:
+        print("No bike hubs found")
+        return
     result = []
     for hub in hub_info:
         lat = hub["latitude"]
@@ -69,13 +72,14 @@ def main():
         )
     # Sort by distance
     result.sort(key=lambda x: x["distance"])
+    max_name_length = max([len(hub["name"]) for hub in result])
     if args.json:
         print({"hubs": result})
         return
     else:
         for hub in result:
             print(
-                f"{hub["name"]+':':<35} {hub["distance"]:>8} m, {hub["bikes_available"]} bikes available "
+                f"{hub["name"]+':':<{max_name_length+4}} {hub["distance"]:>8} m, {hub["bikes_available"]} bikes available "
             )
 
 
