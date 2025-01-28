@@ -48,7 +48,11 @@ def get_hub_info(top_right: Point, bottom_left: Point) -> dict:
 def main():
     args = parse_args()
     geolocator = Nominatim(user_agent="donkapi")
-    location = geolocator.geocode(args.location)
+    try:
+        location = geolocator.geocode(args.location)
+    except:
+        print('No internet connection')
+        return
     point = location.point
     top_right, bottom_left = get_box(point, args.box_size)
     hub_info = get_hub_info(top_right, bottom_left)
