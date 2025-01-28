@@ -9,9 +9,7 @@ from geopy.point import Point
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument(
-        "-l", "--location", help="Location to search for", required=True
-    )
+    parser.add_argument("location", type=str, help="Location to search for", nargs=1)
     parser.add_argument(
         "-b", "--box-size", type=int, default=500, help="Search radius in meters"
     )
@@ -51,7 +49,7 @@ def main():
     try:
         location = geolocator.geocode(args.location)
     except:
-        print('No internet connection')
+        print("No internet connection")
         return
     point = location.point
     top_right, bottom_left = get_box(point, args.box_size)
