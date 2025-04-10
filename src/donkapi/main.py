@@ -40,7 +40,7 @@ def get_hub_info(top_right: Point, bottom_left: Point) -> dict:
     }
     headers = {"Accept": "application/com.donkeyrepublic.v7"}
     response = requests.get(url, params=params, headers=headers)
-    return response.json()["hubs"]
+    return response
 
 
 def main():
@@ -53,7 +53,11 @@ def main():
         return
     point = location.point
     top_right, bottom_left = get_box(point, args.box_size)
-    hub_info = get_hub_info(top_right, bottom_left)
+    response = get_hub_info(top_right, bottom_left)
+    if not response.ok:
+        print(f"HTTP{response.status_code} error")
+        return
+    hub_info = response.json()["hubs"]
     if len(hub_info) == 0:
         print("No bike hubs found")
         return
